@@ -13,10 +13,11 @@ export const createWelcomeElement = (onStart) => {
   element.innerHTML = String.raw`
     <div class="start">
       <div class="content">
-        <div class="wrapper">
+        <div class="box">
           <input type="text" placeholder="Enter Your Name" id="usernameInput"/>
-<code id="errorMsg" style="display: none;">Please enter your name!</code>          <div class="btn">
-            <button id="${START_QUIZ_BUTTON_ID}">start quiz</button>
+<code id="errorMsg" style="display: none;">Please enter your name!</code>          
+            <div class="btn">
+            <button id="${START_QUIZ_BUTTON_ID}">Start Quiz</button>
           </div>
         </div>
       </div>
