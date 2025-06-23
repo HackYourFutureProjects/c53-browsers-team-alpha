@@ -32,7 +32,7 @@
   width: 400px;
   height: auto;
   background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(0.5px);
+  /*backdrop-filter: blur(0.5px);*/
   border-radius: 30px;
   display: flex;
   flex-direction: column;
@@ -143,7 +143,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 36px;
+  font-size: 40px;
   font-weight: 700;
   font-family: 'Arial Black', sans-serif;
   color: white;
@@ -225,7 +225,7 @@
 .answer {
   width: 40%;
   padding: 10px;
-  text-align: center;
+  text-align: left;
   background-color: rgb(11, 11, 162);
   border: 1px solid white;
   border-radius: 15px;
@@ -375,33 +375,68 @@
   font-weight: 300;
 }
 
-
-/* pending endGameView.js logic. 
-
-.congratulations {
-
+.end-screen {
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.winner-text {
-  
+.winner-bg {
+  background-image: url('./assets/winner-background.gif')
 }
 
-.result-text {
+.loser-bg {
+  background-image: url('./assets/background.jpg');
+}
 
-} */
+
+.end-screen .content {
+  background-color: rgba(131, 131, 131, 0.3);
+  padding: 0.5rem;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  width: 100%;
+  max-width: 500px;
+}
+
+.end-screen h1,
+.end-screen h2 {
+  margin: 0.5rem 0;
+}
 
 .try-again-btn {
-  padding: 12px 0;
-  width: 20%;
-  background: mediumblue;
-  color: #eee;
-  outline: none;
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: white;
+  color: black;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
   text-transform: uppercase;
   transition: 1s ease;
 }
 
+
 .try-again-btn:hover {
-  background: linear-gradient(#100241, black);
+  background: black;
+  color: white;
+}
+
+@media screen and (max-width: 1366px) and (min-width: 768px) {
+
+  .main {
+    display: flex;
+    position: relative;
+    width: 85vw;
+    height: 100vh;
+    overflow: hidden;
+    flex-direction: column;
+  }
 }

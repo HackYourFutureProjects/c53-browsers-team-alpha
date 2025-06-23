@@ -1,4 +1,6 @@
 import { START_QUIZ_BUTTON_ID } from '../constants.js';
+import { quizData } from '../data.js';
+import { quizState } from '../data.js';
 
 /**
  * Create the welcome screen
@@ -23,7 +25,7 @@ export const createWelcomeElement = (onStart) => {
       </div>
     </div>`;
 
-  const input = element.querySelector('#usernameInput');
+     const input = element.querySelector('#usernameInput');
   const errorMsg = element.querySelector('#errorMsg');
   const startButton = element.querySelector(`#${START_QUIZ_BUTTON_ID}`);
 
@@ -37,6 +39,9 @@ export const createWelcomeElement = (onStart) => {
   // Handle click logic
   startButton.addEventListener('click', () => {
     const username = input.value.trim();
+    quizData.username=username;
+    quizState.username=username;
+
 
     if (username === '') {
       errorMsg.style.display = 'block';
@@ -56,5 +61,8 @@ export const createWelcomeElement = (onStart) => {
     }
   });
 
+
+
   return element;
 };
+

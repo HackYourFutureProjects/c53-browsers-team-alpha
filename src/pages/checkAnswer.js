@@ -1,8 +1,10 @@
 import { quizData, quizState } from '../data.js';
 import { saveQuizState } from './savestate.js';
 import { initQuestionPage } from './questionPage.js';
-import { resetInMemoryState } from './resetMemory.js';
-import { initWelcomePage } from './welcomePage.js';
+//import { resetInMemoryState } from './resetMemory.js';
+//import { initWelcomePage } from './welcomePage.js';
+import { MoneyCounter } from '../MoneyCounter.js';
+import { showEndScreen } from '../views/endGameView.js';
 
 const correctAudio = new Audio('./public/assets/correct-answer-music.mp3');
 const wrongAudio = new Audio('./public/assets/wrong-answer-music.mp3');
@@ -25,9 +27,7 @@ const nextQuestion = () => {
 
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
   if (quizData.currentQuestionIndex >= quizData.questions.length) {
-    clearQuizState();
-    resetInMemoryState();
-    initWelcomePage();
+setTimeout(showEndScreen, 2500)
     return;
   }
   quizState.currentQuestionIndex = quizData.currentQuestionIndex;
@@ -41,7 +41,6 @@ export const checkAnswers = (e, isSkipe = false) => {
   const correctAnswer = quizData.questions[quizData.currentQuestionIndex].answers[keyCorrectAnswer];
   const correctAnswerElement = document.getElementById(keyCorrectAnswer);
 
-  // Play selection sound for any answer interaction
   try {
     selectAudio.currentTime = 0; 
     selectAudio.play();
@@ -52,7 +51,10 @@ export const checkAnswers = (e, isSkipe = false) => {
   if (isSkipe) {
     correctAnswerElement.classList.add('correct');
     quizState.answers[quizState.currentQuestionIndex] = `${keyCorrectAnswer} (skipped)`;
+    quizState.budget=quizData.budget;
     saveQuizState(quizState);
+     correctAnswerElement.classList.add('correct');
+     setTimeout(showEndScreen,4000);
     
     // Play correct sound for skipped question
     try {
@@ -61,15 +63,23 @@ export const checkAnswers = (e, isSkipe = false) => {
     } catch (err) {
       console.error("Failed to play correct sound:", err);
     }
+
     
-    setTimeout(nextQuestion, 3500);
+    
     
   } else if (e.target.textContent.trim() === correctAnswer.trim()) {
     e.target.classList.add('correct');
     quizData.score++;
     quizState.answers[quizState.currentQuestionIndex] = keyCorrectAnswer;
-    quizState.score++;
+    quizState.score=quizData.score;
+    quizState.budget=quizData.budget;
     saveQuizState(quizState);
+    quizData.budget=MoneyCounter[quizData.currentQuestionIndex].amount;
+    const spans=document.querySelectorAll('li span');
+    const element=Array.from(spans).find(el=>el.textContent.trim()===quizData.budget);
+    if (element){
+    const parent=element.parentElement;
+    parent.classList.add('active');}
     
     // Play correct sound
     try {
@@ -79,15 +89,16 @@ export const checkAnswers = (e, isSkipe = false) => {
       console.error("Failed to play correct sound:", err);
     }
     
-    setTimeout(nextQuestion, 3500);
+    setTimeout(nextQuestion, 3000);
     
   } else {
     correctAnswerElement.classList.add('correct');
     e.target.classList.add('wrong');
     quizState.answers[quizState.currentQuestionIndex] = keyCorrectAnswer;
+    quizState.budget=quizData.budget;
     saveQuizState(quizState);
     
-    // Play wrong sound
+    // Play wrong sounds
     try {
       wrongAudio.currentTime = 0;
       wrongAudio.play();
@@ -95,7 +106,7 @@ export const checkAnswers = (e, isSkipe = false) => {
       console.error("Failed to play wrong sound:", err);
     }
     
-    setTimeout(nextQuestion, 3500);
+    setTimeout(showEndScreen, 3000);
   }
 };
 

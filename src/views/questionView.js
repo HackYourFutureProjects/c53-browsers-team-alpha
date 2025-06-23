@@ -4,7 +4,6 @@ import {
 } from '../constants.js';
 
 import { MoneyCounter } from '../MoneyCounter.js';
-import { quizData } from '../data.js';
 
 /**
  * Create a full question element
@@ -29,15 +28,7 @@ export const createQuestionElement = (question, timeLimit = 30) => {
               </button>
 
     <ul class="moneyList">
-      ${MoneyCounterData.map((money) => {
-        const isActive = money.id === quizData.currentQuestionIndex + 1;
-        return `
-          <li class="${isActive ? 'ListItem active' : 'ListItem'}">
-            <span class="ListItemNumber">${money.id}</span>
-            <span class="moneyAmount">$ ${money.amount}</span>
-          </li>
-        `;
-      }).join('')}
+
     </ul>
   `;
 
@@ -59,9 +50,8 @@ export const createQuestionElement = (question, timeLimit = 30) => {
   <audio id="while-playing-music" src="./public/assets/while-playing-music.mp3" preload="auto" loop></audio>
   `;
 
-
 // Play music after DOM is ready
-  setTimeout(() => {
+setTimeout(() => {
     const audio = document.getElementById('while-playing-music');
     if (audio) {
       audio.play().catch(e => console.log("Audio play failed:", e));
@@ -83,7 +73,7 @@ export const createQuestionElement = (question, timeLimit = 30) => {
       timerElement.classList.remove('yellow-warning');
     }
 
-        if (timeLeft <= 10) {
+    if (timeLeft <= 10) {
       timerElement.classList.add('red-warning');
     } else {
       timerElement.classList.remove('red-warning');

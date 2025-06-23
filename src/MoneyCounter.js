@@ -9,4 +9,4 @@ export const MoneyCounter = [
   { id: 8, amount: "800,000", reached: false },
   { id: 9, amount: "900,000", reached: false },
   { id: 10, amount: "1,000,000", reached: false },
-].reverse();
+];
