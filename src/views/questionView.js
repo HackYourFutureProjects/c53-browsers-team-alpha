@@ -1,30 +1,34 @@
 import { ANSWERS_LIST_ID } from '../constants.js';
-import {
-  SKIP_QUESTION_BUTTON_ID,
-  NEXT_QUESTION_BUTTON_ID,
-} from '../constants.js';
+import { NEXT_QUESTION_BUTTON_ID } from '../constants.js';
 
 /**
  * Create a full question element
+ * @param {string} question - The question text to display
+ * @param {number} timeLimit - Countdown timer in seconds (default: 30)
  * @returns {Element}
  */
-export const createQuestionElement = (question) => {
+export const createQuestionElement = (question, timeLimit = 30) => {
+    const audio = document.getElementById('while-playing-music');
+
+  const MoneyCounterData = [...MoneyCounter];
   const element = document.createElement('div');
+  element.classList.add('app');
+  // Build money counter HTML
+  const MoneyCounterDataHTML = `
+              <button id="${SKIP_QUESTION_BUTTON_ID}" class="skip-button">
+              <img src="./public/assets/skipped-icon.svg" alt="skip" class="skip-icon">
+              </button>
+               <button class="help">
+              <img src="./public/assets/calling-icon.svg" alt="call" class="icon">
+              <img src="./public/assets/audience-icon.svg" alt="call" class="icon">
+              </button>
 
-  // I use String.raw just to get fancy colors for the HTML in VS Code.
-  element.innerHTML = String.raw`
-    <h1>${question}</h1>
+    <ul id="${ANSWERS_LIST_ID}">
+    </ul>
 
-    <div id="${ANSWERS_LIST_ID}" class="Answer-List">
-    </div>
-<div class="container-next-buttons">
-    <button id="${NEXT_QUESTION_BUTTON_ID}" class="next-question">
+    <button id="${NEXT_QUESTION_BUTTON_ID}">
       Next question
     </button>
-    <button id="${SKIP_QUESTION_BUTTON_ID}" class="skip-question">
-      Skip question
-    </button>
-    </div>
   `;
 
   return element;
